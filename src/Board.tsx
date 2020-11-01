@@ -38,6 +38,10 @@ export const Board = (props: Props) => {
   }
 
   useEffect(() => {
+    if (squares.every((sq: any) => sq !== null) === true && !gameOver) {
+      setGameOver(true)
+    }
+
     const winner = calculateWinner(squares)
     if (winner) {
       setStatus(`Winner: ${winner}`)
@@ -45,11 +49,11 @@ export const Board = (props: Props) => {
     } else {
       setStatus('Next Player: ' + (isXNext ? 'X' : 'O'))
     }
-  }, [status, isXNext, squares])
+  }, [status, isXNext, squares, gameOver])
 
   return (
     <>
-      <p className='next-player'>{status} </p>
+      <p className='status'>{status && status} </p>
       <div className='board'>
         {squares.map((value: any, i: number) => (
           <Square key={i} index={i} value={value} handleClick={handleClick} />
